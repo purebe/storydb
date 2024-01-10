@@ -1,7 +1,11 @@
 import { Pool } from 'pg';
 
+let pool;
+
 export function PgConnect() {
-  const pool = new Pool({
+  if (pool) return pool.connect();
+
+  pool = new Pool({
           host: process.env.PG_HOST as string,
           user: process.env.PG_USER as string,
           port: process.env.PG_PORT as number,
