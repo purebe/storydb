@@ -1,12 +1,12 @@
-import { PgConnect } from '@/app/pg';
+import { GetSharedPool } from '@/app/pg';
 import { GetSessionUserId } from '@/app/user';
 
 export async function Project() {
-  const client = await PgConnect();
+  const pool = await GetSharedPool();
   let markup;
   try {
     const userId = await GetSessionUserId();
-    const res = await client.query('SELECT * FROM Project where user_id = $1', [userId]);
+    const res = await pool.query('SELECT * FROM Project where user_id = $1', [userId]);
     markup = (
       <>
         {res.rows.map(row => (
@@ -20,7 +20,6 @@ export async function Project() {
     );
   } catch (err) {
     console.log(err);
-    client.release();
   }
   return markup;
 }

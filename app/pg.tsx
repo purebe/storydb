@@ -10,10 +10,6 @@ const pool = new Pool({
   connectionTimeoutMilllis: 2000
 });
 
-export function PgConnect() {
-  return pool.connect();
-}
-
 export function GetSharedPool() {
   return pool;
 }
