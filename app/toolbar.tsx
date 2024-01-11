@@ -1,7 +1,5 @@
 import { Dropdown } from '@/app/dropdown';
 
-//import '@/app/toolbar.css';
-
 export function Toolbar({ projectTitle }) {
   const links = [
     { href: '#', text: 'Link 1' },
