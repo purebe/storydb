@@ -7,18 +7,16 @@ import { QuillEditor } from '@/app/quill';
 import { Project } from '@/app/projects';
 import { Toolbar } from '@/app/toolbar';
 
-export default async function Home({ params }: { params: { id: string } }) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect('/login', 'push');
-  }
+import { NewProjectModal } from '@/app/project/[id]/newProjectModal';
+
+async function RenderProject(pid, session) {
   const pool = await GetSharedPool();
-  const res = await pool.query('SELECT * FROM Project where id = $1', [params.id]);
+  const res = await pool.query('SELECT * FROM Project where id = $1', [pid]);
   const [ row ] = res.rows;
   const { id, name, description, created_at, updated_at } = row;
 
   return (
-    <div className="h-screen flex flex-col justify-center text-center bg-gray-900 bg-gradient-to-b from-gray-950 to-gray-900">
+    <div className="h-screen flex flex-col justify-center text-center bg-gray-900 text-slate-50 bg-gradient-to-b from-gray-950 to-gray-900">
       <div className="self-start">
         <Toolbar projectTitle={name} />
       </div>
@@ -29,6 +27,11 @@ export default async function Home({ params }: { params: { id: string } }) {
         <span>project created_at: {created_at.toString()}</span>
         <span>project updated_at: {updated_at.toString()}</span>
       </div>
+      <NewProjectModal>
+        <div className="bg-slate-50 text-center text-slate-900">
+          Foobar Modal Dialog Text
+        </div>
+      </NewProjectModal>
       <div className="mx-4 rounded shadow-lg bg-slate-50 ql-h-32">
         <QuillEditor />
       </div>
@@ -40,4 +43,20 @@ export default async function Home({ params }: { params: { id: string } }) {
       </div>
     </div>
   );
+}
+
+async function CreateProject() {
+  const pool = await GetSharedPool();
+}
+
+export default async function Home({ params }: { params: { id: string } }) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    redirect('/login', 'push');
+  }
+  let { id } = params;
+  if (id === '#') {
+    // Create a new project
+  }
+  return RenderProject(id, session);
 }
