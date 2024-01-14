@@ -3,7 +3,7 @@ import { Auth, GetSession } from '@/app/auth';
 import { Projects } from '@/app/projects';
 
 export default async function Home() {
-  await Auth();
+  if (!await Auth()) return;
   const session = await GetSession();
 
   return (
