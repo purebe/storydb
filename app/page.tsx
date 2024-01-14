@@ -14,7 +14,7 @@ export default async function Home() {
         <div className="self-start h-3/5">
           <Projects />
         </div>
-        <div className="flex flex-col grow justify-end text-sm mb-4">
+        <div className="flex flex-col grow justify-end text-sm mb-4 text-slate-50">
           <div>
             <span>Signed in as {session.user && session.user.email} - </span>
             <a href="/api/auth/signout" className="underline">Sign out</a>

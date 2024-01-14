@@ -1,0 +1,5 @@
+div.toolbar {
+  font-size: var(--chakra-fontSizes-md);
+  font-weight: var(--chakra-fontWeights-semibold);
+  align-items: center;
+}

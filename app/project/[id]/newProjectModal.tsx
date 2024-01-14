@@ -1,6 +1,5 @@
 'use client';
 import { ReactNode, useState } from 'react';
-import { useDisclosure } from '@chakra-ui/react';
 
 import {
   Modal,
@@ -10,19 +9,23 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
+  useDisclosure
 } from '@chakra-ui/react';
+
+import { QuillEditor } from '@/app/quill';
 
 interface Props {
   children: ReactNode;
+  openModal: ReactNode;
 }
 
-export function NewProjectModal({ children }: Props) {
+export function NewProjectModal({ children, openModal }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <button onClick={onOpen}>Open Modal</button>
+      <div onClick={onOpen}>{openModal}</div>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
 	<ModalOverlay />
 	<ModalContent>
 	  <ModalHeader>Modal Title</ModalHeader>

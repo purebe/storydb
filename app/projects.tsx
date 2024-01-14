@@ -1,9 +1,22 @@
 import { GetSharedPool } from '@/app/pg';
 import { GetSessionUserId } from '@/app/user';
+import dynamic from 'next/dynamic';
 
-import { Project, NewProject } from '@/app/project';
+import { ProjectLoading } from '@/app/projectLoading';
+import { NewProject } from '@/app/newProject';
+
+// Load Project dynamically to disable server side rendering
+// Otherwise the client locale date string may mismatch between server/client and throw an error
+const Project = dynamic(() =>
+  import('@/app/project'),
+  {
+    ssr: false,
+    loading: () => <ProjectLoading />
+  }
+);
 
 export async function Projects() {
+
   const pool = await GetSharedPool();
   let markup;
   try {
