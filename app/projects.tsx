@@ -1,5 +1,5 @@
 import { GetSharedPool } from '@/app/pg';
-import { GetSessionUserId } from '@/app/user';
+import { getUserId } from '@/app/getUserId';
 import dynamic from 'next/dynamic';
 
 import { ProjectLoading } from '@/app/projectLoading';
@@ -16,11 +16,10 @@ const Project = dynamic(() =>
 );
 
 export async function Projects() {
-
   const pool = await GetSharedPool();
   let markup;
   try {
-    const userId = await GetSessionUserId();
+    const userId = await getUserId();
     const res = await pool.query('SELECT * FROM Project where user_id = $1', [userId]);
     markup = (
       <div className="flex mx-6">

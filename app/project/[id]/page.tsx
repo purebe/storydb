@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { redirect } from 'next/navigation';
+import { Auth, GetSession } from '@/app/auth';
+import { ProjectAuth } from '@/app/project/projectAuth';
 
 import { GetSharedPool } from '@/app/pg';
 import { QuillEditor } from '@/app/quill';
@@ -10,6 +9,8 @@ import { Toolbar } from '@/app/toolbar';
 import { NewProject } from '@/app/project/[id]/newProject';
 
 async function RenderProject(pid, session) {
+  if (!await ProjectAuth(pid)) return;
+
   const pool = await GetSharedPool();
   const res = await pool.query('SELECT * FROM Project where id = $1', [pid]);
   const [ row ] = res.rows;
@@ -38,10 +39,9 @@ async function RenderProject(pid, session) {
 }
 
 export default async function Home({ params }: { params: { id: string } }) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    redirect('/login', 'push');
-  }
+  if (!await Auth()) return;
+
+  const session = await GetSession();
   let { id } = params;
   if (id === '-1') {
     return (

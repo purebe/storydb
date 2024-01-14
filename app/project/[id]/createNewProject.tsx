@@ -1,15 +1,13 @@
 'use server';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Auth } from '@/app/auth';
+import { ProjectAuth } from '@/app/project/projectAuth';
+
 import { GetSharedPool } from '@/app/pg';
 import { getUserId } from '@/app/getUserId';
 import { redirect } from 'next/navigation';
 
 export async function createNewProject(title, desc) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return;
-  }
+  if (!await Auth()) return;
 
   const id = await getUserId();
 
