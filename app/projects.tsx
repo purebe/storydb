@@ -20,7 +20,7 @@ export async function Projects() {
   let markup;
   try {
     const userId = await getUserId();
-    const res = await pool.query('SELECT * FROM Project where user_id = $1', [userId]);
+    const res = await pool.query('SELECT * FROM Project where user_id = $1 ORDER BY updated_at desc', [userId]);
     markup = (
       <div className="flex mx-6">
         {res.rows.map(row => (
