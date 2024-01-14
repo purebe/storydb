@@ -1,6 +1,7 @@
 'use client';
 import '@/app/toolbar.css';
 import { RenameProject } from '@/app/project/[id]/renameProject';
+import { EditDescription } from '@/app/project/[id]/editDescription';
 import { ProjectTitle } from '@/app/projectTitle';
 import { useState } from 'react';
 
@@ -17,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 
-export function Toolbar({ title, id }) {
+export function Toolbar({ title, id, description }) {
   const [projectTitle, setProjectTitle] = useState(title);
   return (
     <div className="toolbar grid grid-cols-12 bg-slate-100 text-slate-800 shadow-md w-screen border-b-2 border-teal-900 select-none">
@@ -39,6 +40,11 @@ export function Toolbar({ title, id }) {
               <RenameProject id={id} title={projectTitle} setProjectTitle={setProjectTitle}>
                 <a className="px-2" href="#">Rename Project...</a>
               </RenameProject>
+            </MenuItem>
+            <MenuItem>
+              <EditDescription id={id} description={description}>
+                <a className="px-2" href="#">Edit Description...</a>
+              </EditDescription>
             </MenuItem>
           </MenuList>
         </Menu>

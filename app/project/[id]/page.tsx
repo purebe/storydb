@@ -19,7 +19,7 @@ async function RenderProject(pid, session) {
   return (
     <div className="h-screen flex flex-col justify-center text-center bg-gray-900 text-slate-50 bg-gradient-to-b from-gray-950 to-gray-900">
       <div className="self-start">
-        <Toolbar title={name} id={id}>
+        <Toolbar title={name} id={id} description={description}>
         </Toolbar>
       </div>
       <div className="self-start h-3/5 px-4 flex flex-col w-full">
